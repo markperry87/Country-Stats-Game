@@ -8,6 +8,11 @@ I currently have it up on the web here: https://markperry87.pythonanywhere.com/
 - Tracks your streak of correct guesses
 - Submit your high score and view the leaderboard.
 
+## Prerequisites
+- Python 3.8 or higher
+- Flask
+- Pandas
+
 ## Structure
 - country-stats-game/
   - `app.py`: Main Flask application
