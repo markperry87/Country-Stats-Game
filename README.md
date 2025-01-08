@@ -14,11 +14,4 @@ I currently have it up on the web here: https://markperry87.pythonanywhere.com/
 - Pandas
 
 ### Structure
-- country-stats-game/
-├── app.py              # Main Flask application
-├── cleaned_stats.csv   # Data file with country statistics
-├── high_scores.json    # JSON file to store high scores (created by the app)
-├── templates/
-│   ├── game.html       # Game interface template
-│   └── game_over.html  # Game over template
-└── README.md           # Project README file
+country-stats-game/ ├── app.py # Main Flask application ├── cleaned_stats.csv # Data file with country statistics ├── high_scores.json # JSON file to store high scores (created by the app) ├── templates/ │ ├── game.html # Game interface template │ └── game_over.html # Game over template └── README.md # Project README file
