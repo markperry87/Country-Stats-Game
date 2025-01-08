@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Over</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8d7da;
+            color: #721c24;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .game-over {
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #f5c6cb;
+            border-radius: 10px;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .game-over h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .game-over p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .game-over button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .game-over button:hover {
+            background-color: #c9302c;
+        }
+        .score-form input[type="text"] {
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 70%;
+            font-size: 1rem;
+        }
+        .scoreboard {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .scoreboard h2 {
+            margin-bottom: 5px;
+        }
+        .scoreboard ol {
+            padding-left: 20px;
+            text-align: left;
+            margin: 0 auto;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-over">
+        <h1>Game Over!</h1>
+        <p>Your final streak was <strong>{{ final_streak }}</strong>.</p>
+
+        {% if not scoreboard %}
+            <!-- If scoreboard is None, show a form for player to submit name -->
+            <div class="score-form">
+                <form action="/submit_score" method="POST">
+                    <input type="text" name="player_name" placeholder="Enter your name" required><br>
+                    <input type="hidden" name="final_streak" value="{{ final_streak }}">
+                    <button type="submit">Submit Score</button>
+                </form>
+            </div>
+        {% else %}
+            <!-- Score was saved, now display the scoreboard -->
+            <div class="scoreboard">
+                <h2>Top Scores</h2>
+                <ol>
+                    {% for entry in scoreboard %}
+                    <li>{{ entry.name }} - {{ entry.score }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <!-- Optional "Play Again" button -->
+            <button onclick="window.location.href='/'">Play Again</button>
+        {% endif %}
+    </div>
+</body>
+</html>

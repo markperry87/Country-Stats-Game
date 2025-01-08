@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Country Stats Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 20px;
+            color: #2c3e50;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: #34495e;
+        }
+
+        #game-form {
+            margin: 30px auto;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* Hidden input field for the "other" country. */
+        #other_country {
+            display: none;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #95a5a6;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% if variable == "GDP" %}
+        <h1>Which country has a higher GDP?</h1>
+    {% elif variable == "GDP_per_capita" %}
+        <h1>Which country has a higher GDP per capita?</h1>
+    {% elif variable == "Population" %}
+        <h1>Which country has a larger population?</h1>
+    {% elif variable == "Area" %}
+        <h1>Which country has a larger area?</h1>
+    {% else %}
+        <!-- Fallback if no matching variable -->
+        <h1>Which country has a higher {{ variable }}?</h1>
+    {% endif %}
+
+    <h2>Current Streak: {{ streak }}</h2>
+
+    <form method="post" action="/check" id="game-form">
+        <!-- Two buttons for the two countries -->
+        <button type="submit" name="country" value="{{ country1 }}"
+                onclick="setOtherCountry('{{ country2 }}')">
+            {{ country1 }}
+        </button>
+
+        <button type="submit" name="country" value="{{ country2 }}"
+                onclick="setOtherCountry('{{ country1 }}')">
+            {{ country2 }}
+        </button>
+
+        <!-- Hidden field to store the "other" country in the form data -->
+        <input type="hidden" name="other_country" id="other_country" value="">
+    </form>
+
+    <script>
+        // This function sets the hidden field with the "other" country
+        function setOtherCountry(country) {
+            document.getElementById("other_country").value = country;
+        }
+    </script>
+
+    <footer>
+        <p>Most stats from 2023</p>
+    </footer>
+</body>
+</html>
