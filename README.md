@@ -13,5 +13,33 @@ I currently have it up on the web here: https://markperry87.pythonanywhere.com/
 - Flask
 - Pandas
 
-### Structure
-country-stats-game/ ├── app.py # Main Flask application ├── cleaned_stats.csv # Data file with country statistics ├── high_scores.json # JSON file to store high scores (created by the app) ├── templates/ │ ├── game.html # Game interface template │ └── game_over.html # Game over template └── README.md # Project README file
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Structure</title>
+    <style>
+        pre {
+            font-family: monospace;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project Structure</h1>
+    <pre>
+country-stats-game/
+├── app.py            # Main Flask application
+├── cleaned_stats.csv # Data file with country statistics
+├── high_scores.json  # JSON file to store high scores (created by the app)
+├── templates/        # Directory for HTML templates
+│   ├── game.html     # Game interface template
+│   └── game_over.html# Game over template
+└── README.md         # Project README file
+    </pre>
+</body>
+</html>
