@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, make_response
 import pandas as pd
 import random
 import json
@@ -45,13 +45,19 @@ def home():
     # Store chosen_stat in session so we know which stat to compare in /check
     session["chosen_stat"] = chosen_stat
 
-    return render_template(
-        "game.html",
-        country1=country1["Country"],
-        country2=country2["Country"],
-        variable=chosen_stat,              # Send the chosen stat to the template
-        streak=session["streak"]           # Pass current streak to template
+    response = make_response(
+        render_template(
+            "game.html",
+            country1=country1["Country"],
+            country2=country2["Country"],
+            variable=chosen_stat,
+            streak=session["streak"]
+        )
     )
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 
 @app.route("/check", methods=["POST"])
 def check():
@@ -74,7 +80,8 @@ def check():
         else:
             # Wrong answer: get final streak, reset it, and go to game over
             final_streak = session["streak"]
-            session["streak"] = 0
+            session.clear()  # Clear the session to reset game state
+            session["streak"] = 0  # Optionally reset streak for new session
             return render_template("game_over.html", final_streak=final_streak, scoreboard=None)
     except IndexError:
         return "Error: Country data is missing or incorrect.", 500
@@ -105,10 +112,12 @@ def submit_score():
 
 @app.route("/game_over")
 def game_over():
-    # This route might not be used now if we directly render `game_over.html` from /check,
-    # but you can keep it for direct navigation or debugging.
     final_streak = session.get("streak", 0)
-    return render_template("game_over.html", final_streak=final_streak, scoreboard=None)
+    response = make_response(render_template("game_over.html", final_streak=final_streak, scoreboard=None))
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False)
